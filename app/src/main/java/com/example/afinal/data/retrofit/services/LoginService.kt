@@ -6,9 +6,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface LoginService {
-    @POST("login")
+    @POST("login/")
     suspend fun login(@Body userLogin: UserLogin): UserWithToken
 
-    @POST("logout")
+    @POST("logout/")
     suspend fun logout(){}
 }

@@ -10,15 +10,15 @@ import retrofit2.http.Path
 
 interface StaffService {
 
-    @POST("staff")
+    @POST("staff/")
     suspend fun createStaff(@Body userSignUp: UserSignUp): User
 
-    @GET("staff")
+    @GET("staff/")
     suspend fun getAllStaff(): List<User>
 
-    @GET("staff/{staffID}")
+    @GET("staff/{staffID}/")
     suspend fun getStaff(@Path("staffID") staffID: Int): User
 
-    @DELETE("staff/{staffID}")
+    @DELETE("staff/{staffID}/")
     suspend fun deleteStaff(@Path("staffID") staffID: Int)
 }
