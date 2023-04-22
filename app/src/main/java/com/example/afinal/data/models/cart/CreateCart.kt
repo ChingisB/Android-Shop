@@ -2,7 +2,7 @@ package com.example.afinal.data.models.cart
 
 import com.google.gson.annotations.SerializedName
 
-data class Cart(
+data class CreateCart(
     @SerializedName("cart")
-    val cart: List<CartItem>
+    val cart: List<CreateCartItem>
 )

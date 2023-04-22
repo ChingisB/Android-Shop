@@ -8,7 +8,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.afinal.ui.theme.FinalTheme
+import com.example.afinal.viewmodels.StaffViewModel
+import com.example.afinal.views.CreateStaff
+import com.example.afinal.views.StaffList
 
 class AdminActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +27,17 @@ class AdminActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Text("Welcome, ADMIN!")
+                    val navController = rememberNavController()
+                    val staffViewModel = viewModel<StaffViewModel>()
+                    NavHost(navController = navController, startDestination = "StaffList") {
+                        composable(route = "StaffList") {
+                            staffViewModel.getStaff()
+                            StaffList(staffViewModel = staffViewModel)
+                        }
+                        composable(route = "CreateStaff"){
+                            CreateStaff(staffViewModel = staffViewModel)
+                        }
+                    }
                 }
             }
         }

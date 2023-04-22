@@ -15,7 +15,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.core.content.ContextCompat.startActivity
 import com.example.afinal.AdminActivity
 import com.example.afinal.ClientActivity
-import com.example.afinal.MainActivity
 import com.example.afinal.StaffActivity
 import com.example.afinal.viewmodels.LoginViewModel
 import kotlin.math.log

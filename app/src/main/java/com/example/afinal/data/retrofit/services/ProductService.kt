@@ -1,10 +1,11 @@
 package com.example.afinal.data.retrofit.services
 
+import com.example.afinal.data.models.product.CreateProduct
+import com.example.afinal.data.models.product.Product
+import com.example.afinal.data.models.product.ProductDetails
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface ProductService {
     @Multipart
@@ -13,4 +14,23 @@ interface ProductService {
         @Part("product_info") productInfo: RequestBody,
         @Part images: List<MultipartBody.Part>
     )
+
+    @GET("products/")
+    suspend fun getProducts(): List<Product>
+
+    @GET("products/{productID}")
+    suspend fun getProduct(@Path("productID") productID: Int): ProductDetails
+
+    @PUT("products/{productID}/")
+    suspend fun updateProduct(
+        @Path("productID") productID: Int,
+        @Body createProduct: CreateProduct
+    ): ProductDetails
+
+    @DELETE("products/{productID}/")
+    suspend fun deleteProduct(@Path("productID") productID: Int)
+
+    @GET("liked")
+    suspend fun getLikeProducts(): List<Product>
+
 }

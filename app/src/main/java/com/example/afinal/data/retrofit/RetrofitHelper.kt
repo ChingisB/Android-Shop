@@ -1,6 +1,5 @@
 package com.example.afinal.data.retrofit
 
-import com.example.afinal.data.models.user.UserWithToken
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,7 +24,7 @@ class RetrofitHelper {
         }
 
         fun deleteToken(){
-            this.token = null;
+            this.token = null
         }
 
 }
