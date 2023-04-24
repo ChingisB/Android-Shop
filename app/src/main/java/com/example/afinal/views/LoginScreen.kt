@@ -1,6 +1,7 @@
 package com.example.afinal.views
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.ClickableText
@@ -46,6 +47,13 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
                     val intent = Intent(context, ClientActivity::class.java)
                     context.startActivity(intent)
                 }
+            } else {
+                val toast = Toast.makeText(
+                    context,
+                    "Error happened ${loginViewModel.errorMessage}",
+                    Toast.LENGTH_SHORT
+                )
+                toast.show()
             }
         }) {
             Text("Login")
