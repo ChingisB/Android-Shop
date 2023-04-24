@@ -2,14 +2,9 @@ package com.example.afinal.data.retrofit.services
 
 import com.example.afinal.data.models.user.User
 import com.example.afinal.data.models.user.UserSignUp
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface StaffService {
-
     @POST("staff/")
     suspend fun createStaff(@Body userSignUp: UserSignUp): User
 
@@ -19,6 +14,6 @@ interface StaffService {
     @GET("staff/{staffID}/")
     suspend fun getStaff(@Path("staffID") staffID: Int): User
 
-    @DELETE("staff/{staffID}/")
+    @DELETE("staff/{staffID}")
     suspend fun deleteStaff(@Path("staffID") staffID: Int)
 }

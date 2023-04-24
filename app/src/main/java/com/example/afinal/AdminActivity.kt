@@ -8,7 +8,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -22,20 +24,25 @@ class AdminActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FinalTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = Color.White
                 ) {
                     val navController = rememberNavController()
                     val staffViewModel = viewModel<StaffViewModel>()
                     NavHost(navController = navController, startDestination = "StaffList") {
                         composable(route = "StaffList") {
                             staffViewModel.getStaff()
-                            StaffList(staffViewModel = staffViewModel)
+                            StaffList(
+                                staffViewModel = staffViewModel,
+                                navController = navController
+                            )
                         }
-                        composable(route = "CreateStaff"){
-                            CreateStaff(staffViewModel = staffViewModel)
+                        composable(route = "CreateStaff") {
+                            CreateStaff(
+                                staffViewModel = staffViewModel,
+                                navController = navController
+                            )
                         }
                     }
                 }

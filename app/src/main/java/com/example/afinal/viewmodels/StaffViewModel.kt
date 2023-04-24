@@ -16,6 +16,7 @@ class StaffViewModel: ViewModel() {
     val staffList = MutableStateFlow<List<User>>(listOf())
     var errorMessage: String? by mutableStateOf("")
     var staffService: StaffService = RetrofitHelper.getInstance().create(StaffService::class.java)
+    var status: Boolean by mutableStateOf(true)
 
     fun getStaff(){
         viewModelScope.launch {
@@ -32,9 +33,11 @@ class StaffViewModel: ViewModel() {
         viewModelScope.launch {
             try{
                 staffService.createStaff(signUp)
+                status = true
             }
             catch (e: Exception){
                 errorMessage = e.message
+                status = false
             }
         }
     }
