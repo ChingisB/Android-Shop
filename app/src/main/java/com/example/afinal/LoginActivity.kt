@@ -21,7 +21,7 @@ class LoginActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color.White
+                    color = MaterialTheme.colors.background
                 ) {
                     val loginViewModel = viewModel<LoginViewModel>()
                     LoginScreen(loginViewModel = loginViewModel)

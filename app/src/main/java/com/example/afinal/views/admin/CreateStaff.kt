@@ -5,10 +5,12 @@ import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavController
@@ -38,12 +40,14 @@ fun CreateStaff(staffViewModel: StaffViewModel, navController: NavController) {
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
             Button(onClick = {
                 staffViewModel.createStaff(
@@ -55,14 +59,14 @@ fun CreateStaff(staffViewModel: StaffViewModel, navController: NavController) {
                     val toast = Toast.makeText(
                         context,
                         "Error! ${staffViewModel.errorMessage}",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_LONG
                     )
                     toast.show()
                 } else {
                     val toast = Toast.makeText(
                         context,
                         "Success! Staff ${username} was created successfully",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_LONG
                     )
                     toast.show()
                     username = ""
