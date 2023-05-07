@@ -9,9 +9,16 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.afinal.ui.theme.FinalTheme
 import com.example.afinal.viewmodels.LoginViewModel
 import com.example.afinal.views.LoginScreen
+import com.example.afinal.views.login.EntranceScreen
+import com.example.afinal.views.login.LoginFragment
+import com.example.afinal.views.login.SignUpFragment
+import com.example.afinal.views.staff.ProductList
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +30,26 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    val navController = rememberNavController()
                     val loginViewModel = viewModel<LoginViewModel>()
-                    LoginScreen(loginViewModel = loginViewModel)
+                    NavHost(navController = navController, startDestination = "Login"){
+                        composable(route = "Login"){
+                            EntranceScreen {
+                                LoginFragment(
+                                    loginViewModel = loginViewModel,
+                                    navController = navController
+                                )
+                            }
+                        }
+                        composable(route = "SignUp"){
+                            EntranceScreen{
+                                SignUpFragment(
+                                    loginViewModel = loginViewModel,
+                                    navController = navController
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
