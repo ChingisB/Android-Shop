@@ -22,14 +22,15 @@ import com.example.afinal.viewmodels.LoginViewModel
 
 @Composable
 fun EntranceScreen(content: @Composable () -> Unit) {
-    Column {
+    Column(modifier = Modifier
+        .background(Color(220,220,220))) {
         Image(painter = painterResource(id = R.drawable.tyagi_logo_4), contentDescription = "logo", Modifier.fillMaxWidth())
         Box(
             Modifier
-                .background(Color(220,220,220))
+                .background(Color.White)
                 .fillMaxSize(), contentAlignment = Alignment.TopCenter){
-            Column{
-                Text(text = "Welcome to Keftemarket", modifier = Modifier.padding(vertical = 50.dp),
+            Column(horizontalAlignment = Alignment.CenterHorizontally){
+                Text(text = "Welcome to Keftemarket", modifier = Modifier.padding(vertical = 30.dp),
                 fontSize = 30.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily(Font(DeviceFontFamilyName("arial.ttf")))
                     )
                 content()
