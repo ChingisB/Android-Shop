@@ -1,6 +1,7 @@
 package com.example.afinal.data.retrofit.services
 
 import com.example.afinal.data.models.user.UserLogin
+import com.example.afinal.data.models.user.UserSignUp
 import com.example.afinal.data.models.user.UserWithToken
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -10,5 +11,8 @@ interface LoginService {
     suspend fun login(@Body userLogin: UserLogin): UserWithToken
 
     @POST("logout/")
-    suspend fun logout(){}
+    suspend fun logout()
+
+    @POST("signup/")
+    suspend fun signUp(@Body userSignUp: UserSignUp): UserWithToken
 }

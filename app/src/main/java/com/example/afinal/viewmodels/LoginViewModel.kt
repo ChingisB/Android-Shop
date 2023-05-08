@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.afinal.data.models.user.User
 import com.example.afinal.data.models.user.UserLogin
+import com.example.afinal.data.models.user.UserSignUp
 import com.example.afinal.data.retrofit.RetrofitHelper
 import com.example.afinal.data.retrofit.services.CartService
 import com.example.afinal.data.retrofit.services.LoginService
@@ -67,6 +68,21 @@ class LoginViewModel : ViewModel() {
                 } else {
                     throw e
                 }
+            }
+        }
+    }
+
+    fun signUp(username: String, email: String, password: String, confirmPassword: String) {
+        viewModelScope.launch {
+            try {
+                val loginService = RetrofitHelper.getInstance().create(LoginService::class.java)
+                val userWithToken =
+                    loginService.signUp(UserSignUp(username, email, password, confirmPassword))
+                user.value = userWithToken.user
+                RetrofitHelper.setToken(userWithToken.token)
+                isAuthenticated.value = true
+            } catch (e: Exception) {
+                errorMessage = e.message
             }
         }
     }
