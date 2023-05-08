@@ -40,7 +40,7 @@ class StaffActivity : ComponentActivity() {
 
                         }
                         composable(route = "VendorList"){
-
+                            
                         }
                         composable(route = "CreateVendor"){
 

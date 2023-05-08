@@ -27,45 +27,48 @@ import kotlin.math.log
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel) {
     val context = LocalContext.current
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        var username by remember { mutableStateOf("") }
-        OutlinedTextField(
-            value = username,
-            onValueChange = { newUsername -> username = newUsername })
-        var password by remember { mutableStateOf("") }
-        OutlinedTextField(
-            value = password,
-            onValueChange = { newPassword -> password = newPassword },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-        )
-        Button(onClick = {
-            loginViewModel.login(username, password)
-            if (loginViewModel.isAuthenticated.value) {
-                if (loginViewModel.user.value!!.isSuperuser) {
-                    val intent = Intent(context, AdminActivity::class.java)
-                    context.startActivity(intent)
-                } else if (loginViewModel.user.value!!.isStaff) {
-                    val intent = Intent(context, StaffActivity::class.java)
-                    context.startActivity(intent)
-                } else {
-                    val intent = Intent(context, ClientActivity::class.java)
-                    context.startActivity(intent)
-                }
-            } else {
-                val toast = Toast.makeText(
-                    context,
-                    "Error happened ${loginViewModel.errorMessage}",
-                    Toast.LENGTH_SHORT
-                )
-                toast.show()
-            }
-        }) {
-            Text("Login")
-        }
+    Column() {
+        
     }
+//    Column(
+//        modifier = Modifier.fillMaxSize(),
+//        verticalArrangement = Arrangement.Center,
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    ) {
+//        var username by remember { mutableStateOf("") }
+//        OutlinedTextField(
+//            value = username,
+//            onValueChange = { newUsername -> username = newUsername })
+//        var password by remember { mutableStateOf("") }
+//        OutlinedTextField(
+//            value = password,
+//            onValueChange = { newPassword -> password = newPassword },
+//            visualTransformation = PasswordVisualTransformation(),
+//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+//        )
+//        Button(onClick = {
+//            loginViewModel.login(username, password)
+//            if (loginViewModel.isAuthenticated.value) {
+//                if (loginViewModel.user.value!!.isSuperuser) {
+//                    val intent = Intent(context, AdminActivity::class.java)
+//                    context.startActivity(intent)
+//                } else if (loginViewModel.user.value!!.isStaff) {
+//                    val intent = Intent(context, StaffActivity::class.java)
+//                    context.startActivity(intent)
+//                } else {
+//                    val intent = Intent(context, ClientActivity::class.java)
+//                    context.startActivity(intent)
+//                }
+//            } else {
+//                val toast = Toast.makeText(
+//                    context,
+//                    "Error happened ${loginViewModel.errorMessage}",
+//                    Toast.LENGTH_SHORT
+//                )
+//                toast.show()
+//            }
+//        }) {
+//            Text("Login")
+//        }
+//    }
 }
