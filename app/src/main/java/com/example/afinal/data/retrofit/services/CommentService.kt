@@ -15,7 +15,7 @@ interface CommentService {
     suspend fun getComment(@Path("productID") productID: Int, @Path("commentID") commentID: Int): Comment
 
     @POST("products/{productID}/comments/")
-    suspend fun createComment(@Path("productID") productID: Int, @Body comment: Comment): Comment
+    suspend fun createComment(@Path("productID") productID: Int, @Body text: String): Comment
 
     @DELETE("products/{productID}/comments/{commentID}/")
     suspend fun deleteComment(@Path("productID") productID: Int, @Path("commentID") commentID: Int)

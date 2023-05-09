@@ -7,14 +7,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,13 +19,17 @@ import androidx.navigation.NavController
 import com.example.afinal.AdminActivity
 import com.example.afinal.ClientActivity
 import com.example.afinal.StaffActivity
+import com.example.afinal.viewmodels.AuthenticationStatus
 import com.example.afinal.viewmodels.LoginViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginFragment(navController: NavController, loginViewModel: LoginViewModel) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -75,28 +76,9 @@ fun LoginFragment(navController: NavController, loginViewModel: LoginViewModel) 
         )
         Button(
             onClick = {
-                loginViewModel.login(username, password)
-                val user = loginViewModel.user.value
-                try {
-                    if (user!!.isSuperuser) {
-                        val intent = Intent(context, AdminActivity::class.java)
-                        context.startActivity(intent)
-                    } else if (user.isStaff) {
-                        val intent = Intent(context, StaffActivity::class.java)
-                        context.startActivity(intent)
-                    } else {
-                        val intent = Intent(context, ClientActivity::class.java)
-                        context.startActivity(intent)
-                    }
-                } catch (e: Exception) {
-                    val toast = Toast.makeText(
-                        context,
-                        "Error happened ${loginViewModel.errorMessage}",
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                coroutineScope.launch {
+                    loginViewModel.login(username, password)
                 }
-
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -122,6 +104,27 @@ fun LoginFragment(navController: NavController, loginViewModel: LoginViewModel) 
                     navController.navigate("SignUp")
                 })
             )
+        }
+        val user by loginViewModel.user.collectAsState()
+        val status by loginViewModel.status.collectAsState()
+        if (status == AuthenticationStatus.SUCCESS) {
+            if (user!!.isSuperuser) {
+                val intent = Intent(context, AdminActivity::class.java)
+                context.startActivity(intent)
+            } else if (user!!.isStaff) {
+                val intent = Intent(context, StaffActivity::class.java)
+                context.startActivity(intent)
+            } else {
+                val intent = Intent(context, ClientActivity::class.java)
+                context.startActivity(intent)
+            }
+        } else if (status == AuthenticationStatus.FAIL){
+            val toast = Toast.makeText(
+                context,
+                "Error happened ${loginViewModel.errorMessage}",
+                Toast.LENGTH_SHORT
+            )
+            toast.show()
         }
     }
 }

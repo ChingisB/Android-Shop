@@ -21,7 +21,7 @@ class LoginViewModel : ViewModel() {
     val user = MutableStateFlow<User?>(null)
     var errorMessage by mutableStateOf<String?>("")
     val isAuthenticated = MutableStateFlow<Boolean>(false)
-
+    val status = MutableStateFlow<AuthenticationStatus?>(null)
 
     // Method is used to login on backend and retrieve token
     fun login(username: String, password: String) {
@@ -33,8 +33,10 @@ class LoginViewModel : ViewModel() {
                 user.value = userWithToken.user
                 RetrofitHelper.setToken(userWithToken.token)
                 isAuthenticated.value = true
+                status.value = AuthenticationStatus.SUCCESS
             } catch (e: Exception) {
                 errorMessage = e.message
+                status.value = AuthenticationStatus.SUCCESS
             }
         }
     }
@@ -86,4 +88,8 @@ class LoginViewModel : ViewModel() {
             }
         }
     }
+}
+
+enum class AuthenticationStatus{
+    SUCCESS, FAIL
 }

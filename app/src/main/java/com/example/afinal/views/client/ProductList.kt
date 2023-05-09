@@ -16,7 +16,7 @@ fun ProductList(productViewModel: ProductViewModel, navController: NavController
         items(products.size) { index ->
             ProductCard(
                 product = products[index],
-                onClick = { navController.navigate("ProductCard/${products[index].id}") })
+                onClick = { navController.navigate("ProductDetails/${products[index].id}") })
         }
     }
 }
