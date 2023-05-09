@@ -1,26 +1,20 @@
-package com.example.afinal.views.admin
+package com.example.afinal.views.staff
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.HorizontalAlignmentLine
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AdminToolBar() {
+fun StaffToolBar() {
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
@@ -28,7 +22,7 @@ fun AdminToolBar() {
             .fillMaxWidth()
             .height(height = 45.dp)
 
-        ) {
+    ) {
 
         Text(text = "Admin Mode", color = Color.White, modifier = Modifier.padding(start = 150.dp))
 
@@ -44,7 +38,7 @@ fun AdminToolBar() {
 
 @Preview
 @Composable
-fun AdminTB() {
+fun StaffTB() {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -54,7 +48,7 @@ fun AdminTB() {
 
     ) {
 
-        Text(text = "Admin Mode", color = Color.White, modifier = Modifier.padding(start = 150.dp))
+        Text(text = "Staff Mode", color = Color.White, modifier = Modifier.padding(start = 150.dp))
 
         IconButton(onClick = { }, modifier = Modifier.padding(end = 5.dp)) {
             Icon(
