@@ -36,7 +36,6 @@ class LoginViewModel : ViewModel() {
                 status.value = AuthenticationStatus.SUCCESS
             } catch (e: Exception) {
                 errorMessage = e.message
-                status.value = AuthenticationStatus.SUCCESS
             }
         }
     }

@@ -31,12 +31,6 @@ fun AdminNavigation(navController: NavController) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        /*Button(onClick = { navController.navigate("StaffList") }) {
-            Text("Staff List")
-        }
-        Button(onClick = { navController.navigate("CreateStaff") }) {
-            Text("Create Staff")
-        }*/
 
         IconButton(onClick = { navController.navigate("StaffList") }) {
             Icon(
@@ -52,13 +46,6 @@ fun AdminNavigation(navController: NavController) {
                 tint = Color.White
             )
         }
-        /*IconButton(onClick = { navController.navigate("CreateStaff") }) {
-            Icon(
-                imageVector = Icons.Filled.ExitToApp,
-                contentDescription = "Exit",
-                tint = Color.White
-            )
-        }*/
     }
 }
 
@@ -68,15 +55,10 @@ fun ANPreview() {
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().background(color = Color.Magenta)
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color.Magenta)
     ) {
-        /*Button(onClick = { navController.navigate("StaffList") }) {
-            Text("Staff List")
-        }
-        Button(onClick = { navController.navigate("CreateStaff") }) {
-            Text("Create Staff")
-        }*/
-
         IconButton(onClick = { }) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_group_white),

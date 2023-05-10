@@ -1,7 +1,6 @@
 package com.example.afinal.views.client
 
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyRow
@@ -11,25 +10,26 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import com.example.afinal.data.models.product.Image
-import com.example.afinal.data.models.product.ProductDetails
 import com.example.afinal.viewmodels.CommentViewModel
+import com.example.afinal.viewmodels.ProductViewModel
 
 @Composable
-fun ProductDetailsScreen(productDetails: ProductDetails, commentViewModel: CommentViewModel) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        ImageCarousel(images = productDetails.images)
-        Text(text = productDetails.name)
-        Text(text = productDetails.description)
-        CommentForm(productID = productDetails.id, commentViewModel = commentViewModel)
-        CommentList(commentViewModel = commentViewModel)
+fun ProductDetailsScreen(productViewModel: ProductViewModel, commentViewModel: CommentViewModel) {
+    val productDetails by productViewModel.product.collectAsState()
+    if (productDetails != null) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            Text(text = productDetails!!.name)
+            Text(text = productDetails!!.description)
+        }
     }
 }
 
 
 @Composable
-fun CommentForm(productID: Int, commentViewModel: CommentViewModel){
+fun CommentForm(productID: Int, commentViewModel: CommentViewModel) {
     var text by remember { mutableStateOf("") }
     Column() {
         OutlinedTextField(value = text, onValueChange = { text = it })

@@ -32,6 +32,7 @@ class StaffActivity : ComponentActivity() {
                     val categoryViewModel = viewModel<CategoryViewModel>()
                     val vendorViewModel = viewModel<VendorViewModel>()
                     val productViewModel = viewModel<ProductViewModel>()
+
                     NavHost(navController = navController, startDestination = "ProductList"){
                         composable(route = "ProductList"){
                             ProductList(productViewModel = productViewModel)
@@ -55,5 +56,10 @@ class StaffActivity : ComponentActivity() {
                 }
             }
         }
+
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
     }
 }

@@ -32,7 +32,7 @@ class ProductViewModel: ViewModel(){
     fun getProduct(productID: Int){
         viewModelScope.launch {
             try{
-                product.value = service.getProduct(productID)
+                product.update { service.getProduct(productID) }
             }
             catch (e: Exception){
                 errorMessage = e.message

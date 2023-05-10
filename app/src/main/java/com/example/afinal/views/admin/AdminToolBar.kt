@@ -30,7 +30,7 @@ fun AdminToolBar() {
 
         ) {
 
-        Text(text = "Admin Mode", color = Color.White, modifier = Modifier.padding(start = 150.dp))
+        Text(text = "Admin Mode", color = Color.White, modifier = Modifier.padding(start = 100.dp))
 
         IconButton(onClick = { }, modifier = Modifier.padding(end = 5.dp)) {
             Icon(

@@ -60,4 +60,8 @@ class AdminActivity : ComponentActivity() {
             }
         }
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
+    }
 }

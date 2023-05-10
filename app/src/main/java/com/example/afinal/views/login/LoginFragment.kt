@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -72,7 +73,8 @@ fun LoginFragment(navController: NavController, loginViewModel: LoginViewModel) 
                 unfocusedBorderColor = Color.LightGray,
                 placeholderColor = Color.Gray,
                 cursorColor = Color(45, 155, 240),
-            )
+            ),
+            visualTransformation = PasswordVisualTransformation()
         )
         Button(
             onClick = {
@@ -107,7 +109,7 @@ fun LoginFragment(navController: NavController, loginViewModel: LoginViewModel) 
         }
         val user by loginViewModel.user.collectAsState()
         val status by loginViewModel.status.collectAsState()
-        if (status == AuthenticationStatus.SUCCESS) {
+        if (status == AuthenticationStatus.SUCCESS && user != null) {
             if (user!!.isSuperuser) {
                 val intent = Intent(context, AdminActivity::class.java)
                 context.startActivity(intent)
