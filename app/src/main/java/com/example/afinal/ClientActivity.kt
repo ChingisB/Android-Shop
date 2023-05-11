@@ -1,6 +1,7 @@
 package com.example.afinal
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -47,6 +48,7 @@ class ClientActivity : ComponentActivity() {
                     val productDetailsViewModel = viewModel<ProductDetailsViewModel>()
                     val categoryViewModel = viewModel<CategoryViewModel>()
                     val vendorViewModel = viewModel<VendorViewModel>()
+                    val context = LocalContext.current
                     Scaffold(
                         topBar = {
                             TopAppBar() {
@@ -66,7 +68,10 @@ class ClientActivity : ComponentActivity() {
                                     )
 
                                     IconButton(
-                                        onClick = { },
+                                        onClick = {
+                                            val intent = Intent(context, LoginActivity::class.java)
+                                            context.startActivity(intent)
+                                        },
                                         modifier = Modifier.padding(end = 5.dp)
                                     ) {
                                         Icon(

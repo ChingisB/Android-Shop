@@ -73,12 +73,5 @@ fun ANPreview() {
                 tint = Color.White
             )
         }
-        /*IconButton(onClick = { navController.navigate("CreateStaff") }) {
-            Icon(
-                imageVector = Icons.Filled.ExitToApp,
-                contentDescription = "Exit",
-                tint = Color.White
-            )
-        }*/
     }
 }

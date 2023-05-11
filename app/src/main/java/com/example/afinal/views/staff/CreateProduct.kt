@@ -1,28 +1,47 @@
 package com.example.afinal.views.staff
 
+import android.content.Context
+import android.net.Uri
+import android.provider.MediaStore
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toFile
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import com.example.afinal.data.models.product.Category
 import com.example.afinal.data.models.product.CreateProduct
 import com.example.afinal.data.models.product.Vendor
 import com.example.afinal.viewmodels.CategoryViewModel
 import com.example.afinal.viewmodels.ProductViewModel
 import com.example.afinal.viewmodels.VendorViewModel
-import kotlinx.coroutines.launch
+import java.io.File
+
 
 @Composable
 fun CreateProduct(
@@ -44,8 +63,7 @@ fun CreateProduct(
     val vendors by vendorViewModel.vendors.collectAsState()
     var selectedVendor by remember { mutableStateOf(Vendor("", "")) }
     var selectedCategory by remember { mutableStateOf(Category("", "")) }
-
-
+    val context = LocalContext.current
 
     LazyColumn(
         modifier = Modifier
@@ -171,11 +189,33 @@ fun CreateProduct(
                     }
                 }
             }
-
-
-
+            var imageList by remember { mutableStateOf<List<Uri?>>(emptyList()) }
+            val galleryLauncher =
+                rememberLauncherForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uriList ->
+                    imageList = uriList
+                }
+            LazyRow(modifier = Modifier.fillMaxSize()) {
+                items(imageList.size) { index ->
+                    AsyncImage(model = imageList[index], "")
+                }
+            }
+            IconButton(onClick = {
+                galleryLauncher.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            }
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "")
+            }
+            Log.e("dadada", productViewModel.errorMessage.toString())
             Button(
                 onClick = {
+                    val createImageList = mutableListOf<File>()
+                    imageList.forEach { uri ->
+                        if (uri != null) {
+                            getFileFromUri(uri, context)?.let { createImageList.add(it) }
+                        }
+                    }
                     productViewModel.createProduct(
                         CreateProduct(
                             productCategoryId,
@@ -183,10 +223,10 @@ fun CreateProduct(
                             productName,
                             productPrice.toInt(),
                             productQuantity.toInt(),
-                            productVendorId
-                        ), emptyList()
+                            productVendorId,
+                        ), createImageList
                     )
-                    navController.navigate("CategoryList")
+                    navController.navigate("ProductList")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -195,7 +235,7 @@ fun CreateProduct(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(45, 155, 240))
             ) {
                 Text(
-                    text = "Create Category",
+                    text = "Create Product",
                     modifier = Modifier.padding(5.dp),
                     color = Color.White,
                     fontSize = 20.sp
@@ -205,3 +245,13 @@ fun CreateProduct(
     }
 }
 
+fun getFileFromUri(uri: Uri, context: Context): File? {
+    val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+    val cursor = context.contentResolver.query(uri, filePathColumn, null, null, null)
+    cursor?.moveToFirst()
+    val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
+    val filePath = cursor?.getString(columnIndex ?: 0)
+    cursor?.close()
+    filePath?.let { return File(it) }
+    return null
+}

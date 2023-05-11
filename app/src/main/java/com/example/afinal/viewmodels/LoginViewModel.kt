@@ -45,9 +45,10 @@ class LoginViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val loginService = RetrofitHelper.getInstance().create(LoginService::class.java)
+                RetrofitHelper.deleteToken()
                 loginService.logout()
             } catch (e: Exception) {
-                throw e
+                errorMessage = e.message
             }
         }
     }

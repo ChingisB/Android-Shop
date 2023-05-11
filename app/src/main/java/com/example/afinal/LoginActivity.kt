@@ -22,13 +22,13 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FinalTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
                     val loginViewModel = viewModel<LoginViewModel>()
+                    loginViewModel.logout()
                     NavHost(navController = navController, startDestination = "Login"){
                         composable(route = "Login"){
                             EntranceScreen {
