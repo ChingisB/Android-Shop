@@ -16,6 +16,6 @@ interface CategoryService {
     @PUT("category/{categoryID}/")
     suspend fun updateCategory(@Path("categoryID") categoryID: Int, @Body category: Category): Category
 
-    @DELETE("category/{categoryID}/")
+    @DELETE("category/{categoryID}")
     suspend fun deleteCategory(@Path("categoryID") categoryID: Int): Category
 }

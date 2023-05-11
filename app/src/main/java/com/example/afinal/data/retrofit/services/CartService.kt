@@ -8,8 +8,8 @@ import retrofit2.http.POST
 
 interface CartService {
     @GET("cart/")
-    fun getCart(): Cart
+    suspend fun getCart(): Cart
 
     @POST("cart/")
-    fun createCart(@Body createCart: CreateCart): Cart
+    suspend fun createCart(@Body createCart: CreateCart): Cart
 }

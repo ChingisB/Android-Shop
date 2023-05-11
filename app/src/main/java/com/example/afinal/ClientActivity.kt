@@ -2,6 +2,7 @@ package com.example.afinal
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,15 +23,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.afinal.ui.theme.FinalTheme
-import com.example.afinal.viewmodels.CartViewModel
-import com.example.afinal.viewmodels.CommentViewModel
-import com.example.afinal.viewmodels.OrderViewModel
-import com.example.afinal.viewmodels.ProductViewModel
+import com.example.afinal.viewmodels.*
 import com.example.afinal.views.admin.AdminNavigation
 import com.example.afinal.views.admin.AdminToolBar
-import com.example.afinal.views.client.ClientNavigation
-import com.example.afinal.views.client.ProductDetailsScreen
-import com.example.afinal.views.client.ProductList
+import com.example.afinal.views.client.*
 import kotlinx.coroutines.launch
 
 class ClientActivity : ComponentActivity() {
@@ -48,7 +44,9 @@ class ClientActivity : ComponentActivity() {
                     val cartViewModel = viewModel<CartViewModel>()
                     val orderViewModel = viewModel<OrderViewModel>()
                     val commentViewModel = viewModel<CommentViewModel>()
-                    val coroutineScope = rememberCoroutineScope()
+                    val productDetailsViewModel = viewModel<ProductDetailsViewModel>()
+                    val categoryViewModel = viewModel<CategoryViewModel>()
+                    val vendorViewModel = viewModel<VendorViewModel>()
                     Scaffold(
                         topBar = {
                             TopAppBar() {
@@ -62,7 +60,7 @@ class ClientActivity : ComponentActivity() {
                                 ) {
 
                                     Text(
-                                        text = "Admin Mode",
+                                        text = "Keftemarket",
                                         color = Color.White,
                                         modifier = Modifier.padding(start = 100.dp)
                                     )
@@ -86,7 +84,9 @@ class ClientActivity : ComponentActivity() {
                         }, content = {
                             NavHost(
                                 navController = navController,
-                                startDestination = "ProductList"
+                                startDestination = "ProductList", modifier = Modifier.padding(
+                                    horizontal = 15.dp, vertical = 10.dp
+                                )
                             ) {
                                 composable(route = "ProductList") {
                                     productViewModel.getProducts()
@@ -96,21 +96,37 @@ class ClientActivity : ComponentActivity() {
                                     )
                                 }
                                 composable(route = "ProductDetails/{productID}") { navBackStackEntry ->
-                                    val productID = navBackStackEntry.arguments?.getInt("productID")
-                                    if(productID != null) {
-                                        productViewModel.getProduct(productID)
+                                    val productID =
+                                        navBackStackEntry.arguments
+                                            ?.getString("productID")?.toInt()
+                                    if (productID != null) {
+                                        productDetailsViewModel.getProduct(productID)
+                                        commentViewModel.getComments(productID)
                                         ProductDetailsScreen(
-                                            productViewModel = productViewModel,
+                                            productDetailsViewModel,
                                             commentViewModel = commentViewModel
                                         )
                                     }
-
                                 }
                                 composable(route = "Cart") {
-
+                                    cartViewModel.getCart()
+                                    CartScreen(
+                                        cartViewModel = cartViewModel,
+                                        navController = navController
+                                    )
                                 }
                                 composable(route = "Orders") {
 
+                                }
+                                composable(route = "Filter") {
+                                    vendorViewModel.getVendors()
+                                    categoryViewModel.getCategories()
+                                    Filter(
+                                        productViewModel,
+                                        categoryViewModel = categoryViewModel,
+                                        vendorViewModel = vendorViewModel,
+                                        navController = navController
+                                    )
                                 }
                             }
                         })

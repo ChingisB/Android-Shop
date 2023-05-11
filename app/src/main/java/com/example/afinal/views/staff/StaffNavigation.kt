@@ -23,13 +23,6 @@ fun StaffNavigation(navController: NavController) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        /*Button(onClick = { navController.navigate("StaffList") }) {
-            Text("Staff List")
-        }
-        Button(onClick = { navController.navigate("CreateStaff") }) {
-            Text("Create Staff")
-        }*/
-
         IconButton(onClick = { navController.navigate("CategoryList") }) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_category_white),
@@ -37,17 +30,17 @@ fun StaffNavigation(navController: NavController) {
                 tint = Color.White
             )
         }
-        IconButton(onClick = { navController.navigate("VendorList") }) {
-            Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_vendor_white),
-                contentDescription = "VendorList",
-                tint = Color.White
-            )
-        }
         IconButton(onClick = { navController.navigate("ProductList") }) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_shopping_basket_white),
                 contentDescription = "ProductList",
+                tint = Color.White
+            )
+        }
+        IconButton(onClick = { navController.navigate("VendorList") }) {
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_vendor_white),
+                contentDescription = "VendorList",
                 tint = Color.White
             )
         }

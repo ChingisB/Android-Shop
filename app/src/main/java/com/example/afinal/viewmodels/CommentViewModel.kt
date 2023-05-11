@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.afinal.data.models.product.Comment
+import com.example.afinal.data.models.product.CreateComment
 import com.example.afinal.data.retrofit.RetrofitHelper
 import com.example.afinal.data.retrofit.services.CommentService
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +31,7 @@ class CommentViewModel: ViewModel(){
     fun createComment(productID: Int, text: String){
         viewModelScope.launch {
             try{
-                service.createComment(productID, text)
+                service.createComment(productID, CreateComment(text))
             }
             catch (e: Exception){
                 errorMessage = e.message

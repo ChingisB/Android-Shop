@@ -16,9 +16,15 @@ interface ProductService {
     )
 
     @GET("products/")
-    suspend fun getProducts(): List<Product>
+    suspend fun getProducts(
+        @Query("category") category: String? = null,
+        @Query("vendor") vendor: String? = null,
+        @Query("name") name: String? = null,
+        @Query("min_price") minPrice: Int? = null,
+        @Query("max_price") maxPrice: Int? = null
+    ): List<Product>
 
-    @GET("products/{productID}")
+    @GET("products/{productID}/")
     suspend fun getProduct(@Path("productID") productID: Int): ProductDetails
 
     @PUT("products/{productID}/")
@@ -30,7 +36,7 @@ interface ProductService {
     @DELETE("products/{productID}/")
     suspend fun deleteProduct(@Path("productID") productID: Int)
 
-    @GET("liked")
+    @GET("liked/")
     suspend fun getLikeProducts(): List<Product>
 
 }

@@ -10,23 +10,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun StaffToolBar() {
     Row(
-        horizontalArrangement = Arrangement.SpaceAround,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .height(height = 45.dp)
+            .padding(start = 30.dp)
 
     ) {
+        Icon(
+            imageVector = Icons.Filled.ExitToApp,
+            contentDescription = "Exit",
+            tint = Color(45, 155, 240)
+        )
 
-        Text(text = "Admin Mode", color = Color.White, modifier = Modifier.padding(start = 150.dp))
+        Text(text = "Staff Mode", color = Color.White)
 
-        IconButton(onClick = { }, modifier = Modifier.padding(end = 5.dp)) {
+        IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Filled.ExitToApp,
                 contentDescription = "Exit",
@@ -47,17 +55,20 @@ fun StaffTB() {
             .height(height = 45.dp)
 
     ) {
+        Icon(
+            imageVector = Icons.Filled.ExitToApp,
+            contentDescription = "Exit",
+            tint = Color(45, 155, 240)
+        )
 
-        Text(text = "Staff Mode", color = Color.White, modifier = Modifier.padding(start = 150.dp))
+        Text(text = "Staff Mode", color = Color.White)
 
-        IconButton(onClick = { }, modifier = Modifier.padding(end = 5.dp)) {
+        IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Filled.ExitToApp,
                 contentDescription = "Exit",
                 tint = Color.White
             )
         }
-
-
     }
 }

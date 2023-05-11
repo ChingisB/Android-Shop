@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class CartViewModel: ViewModel() {
     val cart = MutableStateFlow<Cart?>(null)
     var errorMessage: String? by mutableStateOf("")
-    val service = RetrofitHelper.getInstance().create(CartService::class.java)
+    private val service: CartService = RetrofitHelper.getInstance().create(CartService::class.java)
 
     fun getCart(){
         viewModelScope.launch {

@@ -17,6 +17,6 @@ interface VendorService {
     @PUT("vendor/{vendorID}/")
     suspend fun updateVendor(@Path("vendorID") vendorID: Int, @Body vendor: Vendor): Vendor
 
-    @DELETE("vendor/{vendorID}/")
+    @DELETE("vendor/{vendorID}")
     suspend fun deleteVendor(@Path("vendorID") vendorID: Int)
 }
