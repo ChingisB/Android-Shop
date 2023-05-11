@@ -37,5 +37,6 @@ class CommentViewModel: ViewModel(){
                 errorMessage = e.message
             }
         }
+        getComments(productID)
     }
 }

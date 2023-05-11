@@ -152,5 +152,6 @@ class ProductViewModel : ViewModel() {
                 errorMessage = e.message
             }
         }
+        getProducts()
     }
 }

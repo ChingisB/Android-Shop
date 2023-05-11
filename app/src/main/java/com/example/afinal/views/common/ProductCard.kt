@@ -81,7 +81,7 @@ fun ProductCard(
             )
             if(clientMode) {
                 Button(
-                    onClick = { /*TODO*/ }, modifier = Modifier
+                    onClick = { productViewModel?.addToCart(productID = product.id) }, modifier = Modifier
                         .width(width = 100.dp)
                         .align(alignment = Alignment.CenterHorizontally)
                 ) {
