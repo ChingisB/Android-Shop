@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,10 +39,10 @@ fun ClientNavigation(navController: NavController) {
                 tint = Color.White
             )
         }
-        IconButton(onClick = { navController.navigate("Profile") }) {
+        IconButton(onClick = { navController.navigate("Liked") }) {
             Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_profile_white),
-                contentDescription = "Profile",
+                imageVector = Icons.Filled.Favorite,
+                contentDescription = "Liked",
                 tint = Color.White
             )
         }

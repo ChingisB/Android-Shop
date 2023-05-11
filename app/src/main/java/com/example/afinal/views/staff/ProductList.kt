@@ -34,7 +34,10 @@ fun ProductList(productViewModel: ProductViewModel, navController: NavController
             items(products.size) { index ->
                 ProductCard(
                     product = products[index],
-                    onClick = {})
+                    onClick = {},
+                    clientMode = false,
+                    staffMode = true,
+                    productViewModel = productViewModel)
             }
         }
         Button(

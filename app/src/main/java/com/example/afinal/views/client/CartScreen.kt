@@ -8,8 +8,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import com.example.afinal.viewmodels.CartViewModel
-import com.example.afinal.viewmodels.CategoryViewModel
-import com.example.afinal.viewmodels.ProductViewModel
 import com.example.afinal.views.common.ProductCard
 
 
@@ -21,7 +19,9 @@ fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
             items(cart!!.cart.size) { index ->
                 ProductCard(
                     product = cart!!.cart[index].product,
-                    onClick = { navController.navigate("ProductDetails/${cart!!.cart[index].product}") })
+                    onClick = { navController.navigate("ProductDetails/${cart!!.cart[index].product}") },
+                    clientMode = false
+                )
             }
         }
     } else {

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.*
@@ -26,12 +27,15 @@ fun ProductCard(
     product: Product,
     onClick: () -> Unit,
     clientMode: Boolean = true,
+    staffMode: Boolean = false,
     productViewModel: ProductViewModel? = null
 ) {
     Card(onClick = { onClick() }) {
         Column(modifier = Modifier.fillMaxWidth()) {
             var image = product.image.image
-            image = image.replace("http://92.47.4.210:59001", "http://192.168.137.1:80")
+            if(image != null){
+                image = image.replace("http://92.47.4.210:59001", "http://192.168.137.1:80")
+            }
             Box() {
                 AsyncImage(model = image, contentDescription = "product image")
                 if (clientMode) {
@@ -52,6 +56,14 @@ fun ProductCard(
                             imageVector = if (isFilled) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
                             contentDescription = "Add to favorite",
                             tint = if(isFilled) Color.Yellow else Color.Black
+                        )
+                    }
+                }else if (staffMode){
+                    IconButton(onClick = {productViewModel?.deleteProduct(product.id)}) {
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = "delete product",
+                            tint = Color.LightGray
                         )
                     }
                 }

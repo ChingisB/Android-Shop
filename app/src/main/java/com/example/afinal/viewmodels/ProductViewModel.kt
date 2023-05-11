@@ -5,10 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.afinal.data.models.product.CreateProduct
-import com.example.afinal.data.models.product.Product
-import com.example.afinal.data.models.product.ProductDetails
+import com.example.afinal.data.models.cart.CartItem
+import com.example.afinal.data.models.cart.CreateCart
+import com.example.afinal.data.models.cart.CreateCartItem
+import com.example.afinal.data.models.product.*
 import com.example.afinal.data.retrofit.RetrofitHelper
+import com.example.afinal.data.retrofit.services.CartService
 import com.example.afinal.data.retrofit.services.LikeService
 import com.example.afinal.data.retrofit.services.ProductService
 import com.google.gson.Gson
@@ -20,14 +22,16 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.internal.wait
 import java.io.File
 
 class ProductViewModel : ViewModel() {
     val products = MutableStateFlow<List<Product>>(emptyList())
+    val likedProducts = MutableStateFlow<List<Product>>(emptyList())
     var errorMessage: String? by mutableStateOf("")
     private val service = RetrofitHelper.getInstance().create(ProductService::class.java)
-    var category: String? = null
-    var vendor: String? = null
+    var category: Category? = null
+    var vendor: Vendor? = null
     var minPrice: Int? = null
     var maxPrice: Int? = null
 
@@ -37,8 +41,8 @@ class ProductViewModel : ViewModel() {
                 products.update {
                     service.getProducts(
                         name = name,
-                        category = category,
-                        vendor = vendor,
+                        category = category?.name,
+                        vendor = vendor?.name,
                         minPrice = minPrice,
                         maxPrice = maxPrice
                     )
@@ -65,42 +69,88 @@ class ProductViewModel : ViewModel() {
         }
     }
 
-    fun likeProduct(productID: Int){
+    fun likeProduct(productID: Int) {
         viewModelScope.launch {
-            try{
+            try {
                 val likeService = RetrofitHelper.getInstance().create(LikeService::class.java)
                 likeService.likeProduct(productID)
-            }
-            catch (e: Exception){
+            } catch (e: Exception) {
                 errorMessage = e.message
             }
         }
     }
 
-    fun deleteLike(productID: Int){
+    fun deleteLike(productID: Int) {
         viewModelScope.launch {
-            try{
+            try {
                 val likeService = RetrofitHelper.getInstance().create(LikeService::class.java)
                 likeService.dislikeProduct(productID)
-            }
-            catch (e: Exception){
+            } catch (e: Exception) {
                 errorMessage = e.message
             }
         }
     }
 
-    fun setFilter(category: String?, vendor: String?, minPrice: Int?, maxPrice: Int?){
+    fun setFilter(category: Category?, vendor: Vendor?, minPrice: Int?, maxPrice: Int?) {
         this.category = category
         this.vendor = vendor
         this.minPrice = minPrice
         this.maxPrice = maxPrice
     }
 
+    fun resetFilter() {
+        category = null
+        vendor = null
+        minPrice = null
+        maxPrice = null
+    }
+
+    fun addToCart(productID: Int) {
+        viewModelScope.launch {
+            try {
+                val cartService = RetrofitHelper.getInstance().create(CartService::class.java)
+                val cart = cartService.getCart()
+                val createCartItemList = mutableListOf<CreateCartItem>()
+                cart.cart.forEach { cartItem ->
+                    createCartItemList.add(
+                        CreateCartItem(
+                            cartItem.product.id,
+                            cartItem.quantity
+                        )
+                    )
+                }
+                createCartItemList.add(CreateCartItem(productID, 1))
+                val createCart = CreateCart(createCartItemList)
+                cartService.createCart(createCart)
+            } catch (e: Exception) {
+                errorMessage = e.message
+            }
+        }
+    }
+
+    fun getLikedProducts(){
+        viewModelScope.launch {
+            try{
+                likedProducts.update { service.getLikeProducts() }
+            }
+            catch (e: Exception){
+                errorMessage = e.message
+            }
+        }
+    }
+
     fun updateProduct() {
 
     }
 
-    fun deleteProduct() {
-
+    fun deleteProduct(productID: Int) {
+        viewModelScope.launch {
+            try{
+                service.deleteProduct(productID = productID)
+            }
+            catch (e: Exception){
+                errorMessage = e.message
+            }
+        }
     }
 }

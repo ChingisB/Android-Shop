@@ -115,8 +115,12 @@ class ClientActivity : ComponentActivity() {
                                         navController = navController
                                     )
                                 }
-                                composable(route = "Orders") {
-
+                                composable(route = "Liked") {
+                                    productViewModel.getLikedProducts()
+                                    LikedProductsScreen(
+                                        productViewModel = productViewModel,
+                                        navController = navController
+                                    )
                                 }
                                 composable(route = "Filter") {
                                     vendorViewModel.getVendors()

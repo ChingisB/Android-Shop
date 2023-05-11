@@ -15,8 +15,6 @@ import com.example.afinal.ui.theme.FinalTheme
 import com.example.afinal.viewmodels.CategoryViewModel
 import com.example.afinal.viewmodels.ProductViewModel
 import com.example.afinal.viewmodels.VendorViewModel
-import com.example.afinal.views.admin.AdminNavigation
-import com.example.afinal.views.admin.AdminToolBar
 import com.example.afinal.views.staff.*
 
 class StaffActivity : ComponentActivity() {

@@ -34,7 +34,7 @@ interface ProductService {
     ): ProductDetails
 
     @DELETE("products/{productID}/")
-    suspend fun deleteProduct(@Path("productID") productID: Int)
+    suspend fun deleteProduct(@Path("productID") productID: Int): Product
 
     @GET("liked/")
     suspend fun getLikeProducts(): List<Product>
